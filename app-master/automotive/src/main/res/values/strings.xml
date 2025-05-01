@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OBD2</string>
+    <string name="server_host">172.232.113.177</string>
+    <integer name="server_port">3000</integer>
+    <string name="emulator_host">127.0.0.1</string>
+</resources>
