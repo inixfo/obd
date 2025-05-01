@@ -1780,6 +1780,9 @@ class Elm:
         header = None
         org_cmd = cmd
         cmd = cmd.upper().strip()
+        
+        # Remove spaces from command for processing
+        cmd_no_spaces = cmd.replace(" ", "")
 
         # Handle custom PIDs for gear and gear position
         if cmd == "010D":  # Vehicle Speed
@@ -1850,7 +1853,7 @@ class Elm:
                 break
             uc_val = {k.upper(): v for k, v in val.items()}
             if ('REQUEST' in uc_val and
-                    re.match(uc_val['REQUEST'], cmd)):
+                    re.match(uc_val['REQUEST'], cmd_no_spaces)):
                 if ('HEADER' in uc_val and header and
                         uc_val['HEADER'].upper() !=
                         self.counters["cmd_set_header"]):
