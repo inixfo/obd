@@ -515,6 +515,13 @@ class Elm:
         self.header_version = ELM_HEADER_VERSION
         self.presets = {}
         self.ObdMessage = ObdMessage
+        # Add Engine RPM command to ObdMessage
+        self.ObdMessage['default']['010C'] = {
+            'REQUEST': '^010C$',
+            'DESCR': 'Engine RPM',
+            'RESPONSE': '41 0C {rpm:04X}',
+            'Priority': 1
+        }
         self.ELM_R_UNKNOWN = ELM_R_UNKNOWN
         self.set_defaults()
         self.set_sorted_obd_msg()
@@ -1775,13 +1782,6 @@ class Elm:
         cmd = cmd.upper().strip()
 
         # Handle custom PIDs for gear and gear position
-        if cmd == "010C":  # Engine RPM
-            rpm = self.car.rpm
-            obd_rpm = int(rpm * 4)  # Convert RPM to OBD-II format
-            obd_rpm_hex = f"{obd_rpm:04X}"  # Convert to 4-digit hex
-            response = f"41 0C {obd_rpm_hex}"
-            return header, cmd, response
-
         if cmd == "010D":  # Vehicle Speed
             speed = self.car.speed
             obd_speed = int(speed)  # Convert speed to OBD-II format
